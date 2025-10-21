@@ -17,6 +17,35 @@ A dashboard for students to checkout Mess menu, file compaints, and view complai
 ![Interactive Data Table](./assets/student_screen.png)
 ---
 
+## 🏛️ Core Features & Concepts
+
+This application demonstrates several key concepts of modern web development, combining user-facing features with a robust backend architecture.
+
+### 1. Role-Based Authentication (Session State)
+The system uses **Session State** to manage user authentication. When a user logs in, their `UserId`, `UserName`, and `IsAdmin` status are saved in a temporary session. This "session cookie" is checked with every request to:
+* Secure admin-only pages.
+* Show the correct navigation links (`My Complaints` vs. `Manage Rooms`).
+* Display the correct dashboard for the logged-in user.
+
+### 2. Performance (In-Memory Caching)
+To ensure the dashboard loads instantly, the **"Today's Mess Menu"** is cached using `IMemoryCache`.
+* The menu is fetched from the database only once per day.
+* It's then stored in the server's high-speed memory.
+* All subsequent users see the menu instantly, reducing database load and making the app feel significantly faster.
+
+### 3. Database (SQLite & EF Core)
+The project uses **SQLite**, a serverless, file-based database. This makes the project highly portable and easy to run without any database setup.
+* **Entity Framework Core (EF Core)** is used as the ORM (Object-Relational Mapper).
+* This allows the app to use C# models (like `Student.cs`, `Room.cs`) to interact with the database instead of writing raw SQL.
+
+### 4. Interactive UI (DataTables.js)
+All data lists (like "All Complaints") are enhanced with **DataTables.js**. This JavaScript library automatically adds essential features like:
+* Live Search / Filtering
+* Column Sorting
+* Pagination
+
+---
+
 ## 🛠️ Tech Stack
 
 * **Framework:** ASP.NET Core 8.0 (MVC with Razor Views)
@@ -103,24 +132,6 @@ The database is pre-seeded with two user accounts for testing:
 * **Student:**
     * **Email:** `john@student.com`
     * **Password:** `password`
-
----
-
-## 🏛️ Architecture & Key Concepts
-
-This application demonstrates several key concepts of modern web development:
-
-### 1. Database (SQLite & EF Core)
-* **What:** The project uses **SQLite**, a serverless, file-based database, which is perfect for development as it's just a single file (`hostel.db`) in the project.
-* **How:** **Entity Framework Core (EF Core)** is used as the ORM (Object-Relational Mapper). This allows us to interact with the database using simple C# models (like `Student.cs`, `Room.cs`) instead of writing raw SQL.
-
-### 2. Session State (Web "Shared Preferences")
-* **What:** In ASP.NET Core, the equivalent concept to "Shared Preferences" for storing user-specific data is **Session State**.
-* **How:** When a user logs in, their `UserId`, `UserName`, and `IsAdmin` status are saved in a temporary session. This "session cookie" is sent with every request, allowing the application to remember who the user is, show the correct navigation links, and secure admin-only pages.
-
-### 3. Cache Memory (`IMemoryCache`)
-* **What:** This is a high-speed, temporary storage location in the server's memory.
-* **How:** To improve performance, the **"Today's Mess Menu"** on the dashboard is cached. The first time anyone loads the page, the menu is fetched from the database and saved in the cache. For all other users on the same day, the menu is served instantly from the cache, reducing database load and making the app feel faster.
 
 ---
 
