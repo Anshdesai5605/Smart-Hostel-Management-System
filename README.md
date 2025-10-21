@@ -5,7 +5,7 @@ A modern, full-featured web application built using ASP.NET Core 8.0 MVC. It pro
 Here is a showcase of the application's user interface and core features.
 
 ### 1. Admin Dashboard
-The central hub for the admin/warden to manage all hostel operations.
+An all-in-one hub for the admin/warden to manage all hostel operations.
 ![Admin Dashboard](./assets/admin_panel.png)
 
 ### 2. Secure Login Page
@@ -13,7 +13,7 @@ A clean, modern, and centered login form.
 ![Login Page](./assets/login_screen.png)
 
 ### 3. Student Dashboard
-A dashboard for students to checkout Mess menu, file compaints, and view complaint's status.
+A dashboard for students to check out the mess menu, file complaints, and view complaint status.
 ![Interactive Data Table](./assets/student_screen.png)
 ---
 
