@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var userName = Context.Session.GetString("UserName");
+    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
+    var todaysMenu = ViewBag.TodaysMenu as SmartHostelManagementSystem.Models.MessMenu;
+}
+
+<div class="welcome-header">
+    <h1>Welcome, @userName!</h1>
+    <p class="lead text-muted">Here's your overview for today.</p>
+</div>
+
+<div class="row justify-content-center">
+    @if (!isAdmin)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-pencil-alt me-2"></i>Student Actions</h5>
+                </div>
+                <div class="card-body text-center">
+                    <p>Have a concern or an issue to report?</p>
+                    <a class="btn btn-primary w-100 mb-2" asp-controller="Complaints" asp-action="Create">File a New Complaint</a>
+                    <a class="btn btn-secondary w-100" asp-controller="Complaints" asp-action="Index">View My Complaints</a>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-utensils me-2"></i>Today's Mess Menu (@DateTime.Today.DayOfWeek)</h5>
+            </div>
+            @if (todaysMenu != null)
+            {
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Breakfast:</strong> @todaysMenu.Breakfast</li>
+                    <li class="list-group-item"><strong>Lunch:</strong> @todaysMenu.Lunch</li>
+                    <li class="list-group-item"><strong>Dinner:</strong> @todaysMenu.Dinner</li>
+                </ul>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p class="text-muted mb-0">Menu for today is not available.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@if (isAdmin)
+{
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-user-shield me-2"></i>Admin Panel</h5>
+        </div>
+        <div class="card-body text-center">
+            <a class="btn btn-warning m-1" asp-controller="Rooms" asp-action="Index"><i class="fas fa-door-open me-2"></i>Manage Rooms</a>
+            <a class="btn btn-success m-1" asp-controller="MessMenus" asp-action="Index"><i class="fas fa-calendar-alt me-2"></i>Manage Mess Menu</a>
+            <a class="btn btn-danger m-1" asp-controller="Complaints" asp-action="Index"><i class="fas fa-exclamation-triangle me-2"></i>View All Complaints</a>
+        </div>
+    </div>
+}
